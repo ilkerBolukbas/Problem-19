@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
-
+import { useEffect, useState, useRef } from "react";
 
 // Modal (dialog) bileşeni oluşturacağız ve isOpen state değişkeni true olduğunda modal açılacak.
 // Görevler:
@@ -23,27 +22,31 @@ import { useEffect, useState, useRef } from 'react'
 // 5. Modal içeriğini ve kapat butonunu, özellikle ekran okuyucular (screen readers) için erişilebilir hale getirin (aria-labelledby ve aria-hidden gibi erişilebilirlik özniteliklerini kullanın).
 
 export default function App() {
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
 
   function openModal() {
-    setOpen(true)
+    setOpen(true);
   }
 
   function closeModal() {
-    setOpen(false)
+    setOpen(false);
   }
 
   return (
     <>
-      <button
-        onClick={openModal}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
-        Modali Aç
-      </button>
+      <div className="flex items-center justify-center min-h-screen">
+        <button
+          onClick={openModal}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          Modali Aç
+        </button>
+      </div>
 
       <Modal isOpen={isOpen} onClose={closeModal} title="Modal açık">
-        <p className="text-gray-700">Bu modal içeriği props ile özelleştirilebilir.</p>
+        <p className="text-gray-700">
+          Bu modal içeriği props ile özelleştirilebilir.
+        </p>
         <button
           onClick={closeModal}
           className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-md"
@@ -52,41 +55,41 @@ export default function App() {
         </button>
       </Modal>
     </>
-  )
+  );
 }
 
 function Modal({ isOpen, onClose, title, children }) {
-  const overlayRef = useRef(null)
+  const overlayRef = useRef(null);
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key === 'Escape') {
-        onClose()
+      if (e.key === "Escape") {
+        onClose();
       }
     }
 
     if (isOpen) {
-      console.log('Modal açıldı')
-      document.body.style.overflow = 'hidden'
-      window.addEventListener('keydown', handleKeyDown)
+      console.log("Modal açıldı");
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
     } else {
-      console.log('Modal kapatıldı')
-      document.body.style.overflow = ''
+      console.log("Modal kapatıldı");
+      document.body.style.overflow = "";
     }
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = ''
-    }
-  }, [isOpen, onClose])
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, onClose]);
 
   function handleOverlayClick(e) {
     if (e.target === overlayRef.current) {
-      onClose()
+      onClose();
     }
   }
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div
@@ -109,7 +112,7 @@ function Modal({ isOpen, onClose, title, children }) {
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 // function Modal({ children }) {
